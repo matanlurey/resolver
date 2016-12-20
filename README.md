@@ -15,6 +15,9 @@ AST (i.e. with types, imports, metadata available).
 > lower-level [package:build][pkg_build], which already has a very
 > simplified model for resolving code.
 
+[pkg_source_gen]: https://pub.dartlang.org/packages/source_gen
+[pkg_build]: https://pub.dartlang.org/packages/build
+
 ## Getting Started
 
 This package is meant to be used along with `package:analyzer`, so
