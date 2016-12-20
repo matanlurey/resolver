@@ -77,6 +77,26 @@ void main() {
         'Resolver',
       ]);
     });
+
+    test('should resolve an in-memory dart file', () async {
+      final libFake = await resolver.resolveSourceCode(r'''
+        import 'package:resolver/resolver.dart';
+
+        Resolver getResolver() => null;
+      ''');
+
+      expect(libFake.definingCompilationUnit.functions, hasLength(1));
+
+      final getResolverMethod = libFake.definingCompilationUnit.functions.first;
+      expect(getResolverMethod.name, 'getResolver');
+
+      final returnType = getResolverMethod.returnType;
+      expect(returnType.element.name, 'Resolver');
+      expect(
+        returnType.element.library.identifier,
+        'package:resolver/src/resolver.dart',
+      );
+    });
   });
 }
 

@@ -1,5 +1,10 @@
 # `resolver`
 
+[![package:resolver][pub_shield]][pub_link]
+
+[pub_shield]: https://img.shields.io/pub/v/resolver.svg
+[pub_link]: https://pub.dartlang.org/packages/resolver
+
 **WARNING:** _This is not an official Google or Dart project_
 
 A very simple frontend for resolving Dart code using `package:analyzer`.

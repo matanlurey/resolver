@@ -1,5 +1,5 @@
 name: resolver
-version: 0.1.0
+version: 0.1.1
 author: Matan Lurey <matan@lurey.org>
 description: Simple frontend for resolving Dart code
 homepage: https://github.com/matanlurey/resolver

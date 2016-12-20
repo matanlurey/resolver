@@ -53,6 +53,9 @@ abstract class Resolver {
 
   /// Returns resolved [LibraryElement] representing [packageName]:[fileName].
   Future<LibraryElement> resolvePackageUri(String packageName, String fileName);
+
+  /// Returns resolved [LibraryElement] representing [sourceCode].
+  Future<LibraryElement> resolveSourceCode(String sourceCode);
 }
 
 /// Implements [Resolver] on top of an [AnalysisContext].
@@ -85,6 +88,12 @@ class _ContextResolver implements Resolver {
     if (source == null) {
       throw new ArgumentError('Not a valid URI: ${assetUri}');
     }
+    return _context.computeLibraryElement(source);
+  }
+
+  @override
+  Future<LibraryElement> resolveSourceCode(String sourceCode) async {
+    final source = new InMemorySource(sourceCode);
     return _context.computeLibraryElement(source);
   }
 }

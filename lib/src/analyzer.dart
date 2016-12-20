@@ -19,8 +19,10 @@ import 'package:analyzer/source/package_map_resolver.dart'
 import 'package:analyzer/src/dart/sdk/sdk.dart' show FolderBasedDartSdk;
 import 'package:analyzer/src/generated/engine.dart'
     show AnalysisContext, AnalysisEngine, AnalysisOptions, AnalysisOptionsImpl;
+import 'package:analyzer/src/generated/engine.dart';
 import 'package:analyzer/src/generated/source.dart'
-    show DartUriResolver, SourceFactory, UriResolver;
+    show DartUriResolver, Source, SourceFactory, UriResolver;
+import 'package:analyzer/src/generated/source.dart';
 import 'package:package_config/packages_file.dart' as packages_file;
 import 'package:path/path.dart' as p;
 
@@ -80,4 +82,42 @@ UriResolver createPackagesResolver(String packageLocation) {
     packagesMap[name] = [physicalFs.getFolder(filePath)];
   });
   return new PackageMapUriResolver(physicalFs, packagesMap);
+}
+
+/// An in-memory representation of [Source].
+class InMemorySource extends Source {
+  final String _name;
+  final String _source;
+
+  InMemorySource(this._source, [this._name = '_.dart']);
+
+  @override
+  TimestampedData<String> get contents => new TimestampedData(
+        new DateTime.now().millisecondsSinceEpoch,
+        _source,
+      );
+
+  @override
+  String get encoding => 'IN_MEMORY:$_name';
+
+  @override
+  bool exists() => true;
+
+  @override
+  String get fullName => _name;
+
+  @override
+  bool get isInSystemLibrary => false;
+
+  @override
+  int get modificationStamp => contents.modificationTime;
+
+  @override
+  String get shortName => _name;
+
+  @override
+  Uri get uri => Uri.parse(_name);
+
+  @override
+  UriKind get uriKind => UriKind.FILE_URI;
 }
